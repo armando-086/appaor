@@ -1,0 +1,1781 @@
+<MainWid>:
+    canvas:
+        Color:
+            #rgb:0,.5,.5,1
+            rgb:255,255,255,
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+#************************************************************************************************
+#****************************PRIMERA VENTANA**MENU PRINCIPAL*************************************
+#*********************************************************************************
+<StartWid>:
+    md_bg_color:255,255,255,255
+    MDBoxLayout:
+        orientation: "vertical"
+        MDBoxLayout:
+            size_hint: 1,.2
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"CONTROL DE ENTRENAMIENTO"
+                    font_size:20
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+                    
+                
+        #*************FIN---TITULO*************************
+        #*************INICIO---MENU*************************
+        MDGridLayout:
+            cols:2
+            size_hint:1,.8
+            padding:["10dp","10dp","10dp","10dp"]
+            spacing:"10dp" 
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                ripple_behavior:True
+                on_press: root.create_database_sesion_ejercicio()
+                MDBoxLayout:
+                    orientation: "vertical"
+                    Image:
+                        source:"iniciar_entrenamiento_1.jfif"
+                        allow_stretch: True
+                        keep_ratio: False
+                    MDLabel:
+                        text:"INICIAR ENTRENAMIENTO"
+                        font_size:16
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                        size_hint: 1,.3
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                ripple_behavior:True
+                on_press: root.create_database_sesion_muscular()
+                MDBoxLayout:
+                    orientation: "vertical"
+                    Image:
+                        source:"sesion_muscular.png"
+                        allow_stretch: True
+                        keep_ratio: False
+                    MDLabel:
+                        text:"SESION MUSCULAR"
+                        font_size:16
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                        size_hint: 1,.3
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                ripple_behavior:True
+                on_press: root.nivel_intensidad()
+                MDBoxLayout:
+                    orientation: "vertical"
+                    Image:
+                        source:"nivel_intensidad.png"
+                        allow_stretch: True
+                        keep_ratio: False
+                    MDLabel:
+                        text:"NIVEL DE INTENSIDAD"
+                        font_size:16
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                        size_hint: 1,.3
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                ripple_behavior:True
+                on_press: root.nivel_estress()
+                MDBoxLayout:
+                    orientation: "vertical"
+                    Image:
+                        source:"nivel_fatiga3.jfif"
+                        allow_stretch: True
+                        keep_ratio: False
+                    MDLabel:
+                        text:"NIVEL DE ESTRESS"
+                        font_size:16
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                        size_hint: 1,.3
+
+#*******************************************************************************************************
+#*********************FIN**PRIMERA VENTANA**MENU PRINCIPAL***********************************************
+#********************************************************************************************************
+
+#*******************************************************************************************************
+#*************************SEGUNDA VENTANA****VISUALIZAR SESION MUSCULAR*********************************
+#********************************************************************************************************
+#************************DATABASE GENERAL******************************************************
+#***********************CREAR TARJETA IMPRESA INFORMACION 
+<DataWid_SMG>:
+    data: ''
+    data_id: ''
+    canvas:
+        Color:
+            rgba: 0,0,1,.5
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    MDLabel:
+        size_hint_x: 0.9
+        size_font: self.width*0.4
+        text: root.data
+        font_size:15
+    MDFlatButton:
+        size_hint_x: 0.06
+        text: 'Edit'
+        theme_text_color: "Custom"
+        text_color:"white"
+        font_size:18
+        adaptive_size: True
+        md_bg_color:0,.5,.5,.6
+        on_press: root.update_data_SMG(root.data_id)
+
+<Button_ver_SMG>:#BOTON AGREGAR
+    font_size: 15#self.height*0.5
+    text: 'VER'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    on_press: self.visualizar_SMG()
+
+<Button_atras_SMG>:#BOTON AGREGAR
+    font_size: 15#self.height*0.5
+    text: 'ATRAS'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+    on_press: self.atras_insertdata_SM()
+
+<Button_inicio_SMG>:#BOTON INICIO
+    font_size: 15#self.height*0.5
+    text: 'INICIO'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+    on_press: self.back_to_StartWid()
+    
+<DataBase_SMG>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing:10
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.2
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"VISUALIZAR SESION MUSCULAR"
+                    font_size:15
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+         #*******FIN ***TITULO*****************************************
+        MDBoxLayout:
+            size_hint:1,.08
+            Spinner:
+                id: sm2
+                text: 'PECHO'
+                values: ["PECHO","ESPALDA","ABDOMEN", "HOMBRO", "BICEP","TRICEP","ANTEBRAZO","CUADRICEP","ISQUIO","ABDUCTORE","PANTORRILLA","GLUTEO"]
+                sync_height: True
+                on_text: root.select_sesion_m2()
+        ScrollView:
+            MDGridLayout:
+                id: agregar_smg
+                padding: [10,10,10,10]
+                spacing: 5
+                size_hint_y: None
+                cols: 1
+                row_default_height: root.height*0.1
+                height: self.minimum_height
+        #**************BOTONES*************
+        MDBoxLayout:
+            id: inicio_smg
+            padding: 5
+            spacing:5
+            orientation: 'horizontal'
+            size_hint:1,.1
+            canvas:
+                Color:
+                    rgb: 1,1,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+#*********************************DATABASE GENERAL*********************************
+#************************DATABASE ESPECIFICO******************************************************
+#***********************CREAR TARJETA IMPRESA INFORMACION PECHO
+<DataWid_SME>:
+    data: ''
+    data_id: ''
+    canvas:
+        Color:
+            rgba: 0,0,1,.5
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    MDLabel:
+        size_hint_x: 0.9
+        size_font: self.width*0.4
+        text: root.data
+        font_size:15
+    MDFlatButton:
+        size_hint_x: 0.08
+        text: 'Edit'
+        theme_text_color: "Custom"
+        text_color:"white"
+        font_size:16
+        adaptive_size: True
+        md_bg_color:0,.5,.5,.6
+        on_press: root.update_data_SME(root.data_id)#MODIFIQUE
+
+<Button_ver_SME>:#BOTON AGREGAR
+    font_size: 15#self.height*0.5
+    text: 'VER'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+    on_press: self.visualizar_SME()
+
+<Button_atras_SME>:#BOTON AGREGAR
+    font_size: 15#self.height*0.5
+    text: 'ATRAS'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+    on_press: self.atras_insertdata_SM()
+
+<Button_inicio_SME>:#BOTON INICIO
+    font_size: 15#self.height*0.5
+    text: 'INICIO'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+    on_press: self.back_to_StartWid()
+    
+<DataBase_SME>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing:10
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.2
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"VISUALIZAR SESION MUSCULAR"
+                    font_size:15
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+         #*******FIN ***TITULO*****************************************
+        ScrollView:
+            MDGridLayout:
+                id: agregar_sme
+                padding: [10,10,10,10]
+                spacing: 5
+                size_hint_y: None
+                cols: 1
+                row_default_height: root.height*0.1
+                height: self.minimum_height
+        #**************BOTONES*************
+        MDBoxLayout:
+            id: inicio_sme
+            padding: 5
+            spacing:5
+            orientation: 'horizontal'
+            size_hint:1,.1
+            canvas:
+                Color:
+                    rgb: 1,1,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+#*********************************DATABASE ESPECIFICO*********************************
+#*******************************************************************************************************
+#*****************FIN*****SEGUNDA VENTANA****VISUALIZAR SESION MUSCULAR*********************************
+#********************************************************************************************************
+
+#*******************************************************************************************************
+#*************************TERCERA VENTANA****INSERTAR SESION MUSCULAR*********************************
+#********************************************************************************************************
+<LeftLabel@Label>:
+    text_size: self.size
+    halign: 'left'
+
+<MessagePopup>:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: message
+            size_hint: 1,0.8
+            text: ''
+        Button:
+            size_hint: 1,0.2
+            text: 'Regresar'
+            on_press: root.dismiss()
+
+<InsertData_SM>:
+    data: ''
+    data_id: ''
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing:10
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.8
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"EJERCICIO MUSCULAR"
+                    font_size:20
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+         #*******FIN ***TITULO*****************************************
+        #*********************AGREGAR EJERCICIO *******************
+        MDBoxLayout:
+            size_hint:1,.35
+            Spinner:
+                id: sm1
+                text: 'SELECCIONE_MUSCULO'
+                values: ["PECHO","ESPALDA","ABDOMEN", "HOMBRO", "BICEP","TRICEP","ANTEBRAZO","CUADRICEP","ISQUIO","ABDUCTORE","PANTORRILLA","GLUTEO"]
+                sync_height: True
+                on_text: root.select_sesion_m()
+                #SpinnerOption:
+                #option_cls: Factory.sp
+                #background_color:"black"#1,1,1
+                # color:"black"
+        #*********************DATOS EJERCICIO MUSCULAR***** 
+        MDBoxLayout:
+            size_hint:1,.35
+            Spinner:
+                id: ti_articulacion
+                text: 'ARTICULACION'
+                values: ["MONO","MULTI"]
+                on_text: root.select_articular()
+                sync_height: True
+        MDBoxLayout:
+            size_hint:1,.35
+            Spinner:
+                id: ti_modo
+                text: 'MODO'
+                values: ["PESO LIBRE","MAQUINA CON PESO","MAQUINA CON POLEA"]
+                on_text: root.select_modo()
+                sync_height: True
+        MDBoxLayout:
+            size_hint:1,.4
+        MDBoxLayout:
+            size_hint:1,.2
+            orientation: 'horizontal'
+            spacing:5
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abrv
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'ABRV'
+                max_text_length: 5
+                size_hint:.3,4.3
+                on_text: root.select_abrv()
+            MDTextField:
+                mode: "rectangle"
+                id: ti_ejercicio
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: True
+                hint_text: 'EJERCICIO'
+                max_text_length: 34
+                on_text: root.select_ejercicio()
+        MDBoxLayout:
+            size_hint:1,.15
+        #**************MUSCULOS SECUNDARIO*************************
+        MDBoxLayout:
+            size_hint:1,.8
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_pec
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'PEC_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_esp
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'ESP_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abd
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'ABD_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_hom
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'HOM_%'
+        MDBoxLayout:
+            size_hint:1,.8
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_bic
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'BIC_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_tri
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'TRI_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_ant
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'ANT_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_cua
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'CUA__%'
+        MDBoxLayout:
+            size_hint:1,.8
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_isq
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'ISQ_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abdu
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'ABDU_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_pan
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'PAN_%'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_glu
+                font_size:18
+                text_size:self.size
+                valign:"middle"
+                halign:"center"
+                multiline: False
+                hint_text: 'GLU__%'
+        #*******************MUSCULOS SECUNDARIO****************************
+        #*********************DATOS EJERCICIO MUSCULAR***** 
+        MDBoxLayout:
+            size_hint:1,.3
+        #*********************CALCULAR 1RM***** 
+        MDBoxLayout:
+            spacing:2
+            size_hint:1,.5
+            MDTextField:
+                mode: "rectangle"
+                id: ti_1rm
+                multiline: True
+                hint_text: '1RM'
+                on_text: root.select_1rm()
+            MDTextField:
+                mode: "rectangle"
+                id: ti_peso1
+                multiline: True
+                hint_text: 'PESO'
+                imput_filter:"float"
+            MDTextField:
+                mode: "rectangle"
+                id: ti_no_rep
+                multiline: True
+                hint_text: 'NO.REP' 
+                imput_filter:"float"  
+            MDRaisedButton:
+                text:'CALCULAR'
+                font_size:16
+                adaptive_size: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                on_press: root.calcular_RM()
+        #************************CALCULAR 1RM************************  
+        #************************BOTONES************************ 
+        MDBoxLayout:
+            size_hint:1,.1
+        MDBoxLayout:
+            spacing:2
+            size_hint:1,.4
+            MDRaisedButton:
+                text:'ATRAS'
+                font_size:16
+                size_hint:1,1
+                adaptive_size: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                on_press: root.back_to_StartWid()
+            MDRaisedButton:
+                text:'AGREGAR'
+                font_size:16
+                size_hint:1,1
+                adaptive_size: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                on_press: root.insert_data_SM()
+            MDRaisedButton:
+                text:'EDITAR'
+                font_size:16
+                size_hint:1,1
+                adaptive_size: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                on_press: root.ir_to_dbw_SMG()
+        #************************BOTONES************************  
+
+#*******************************************************************************************************
+#******************FIN******TERCERA VENTANA****INSERTAR SESION MUSCULAR*********************************
+#********************************************************************************************************
+
+# #******************************************************
+# #*CUARTA VENTANA**SESION MUSCULAR MODIFICAR Y ELIMINAR EJERCICIOS*********
+# #******************************************************  
+#********************************UPDATEDATA GENERAL********************************
+<UpdateData_SMG>:
+    data: ''
+    data_id: ''
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing:10
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.8
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"MODIFICAR O ELIMINAR EJERCICIO"
+                    font_size:16
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+        #**********FIN TITULO********************************
+        MDBoxLayout:
+            size_hint:1,.6
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_id
+                text:root.data_id
+                multiline: False
+                hint_text: 'ID'
+                readonly:True
+            MDTextField:
+                mode: "rectangle"
+                id: ti_articulacion
+                multiline: False
+                hint_text: 'MONO O MULTI'
+        MDBoxLayout:
+            size_hint:1,.6
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_modo
+                multiline: False
+                hint_text: 'MODO'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_1rm
+                multiline: True
+                hint_text: '1RM'
+        MDBoxLayout:
+            spacing:2
+            orientation: 'horizontal'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abrv
+                multiline: False
+                hint_text: 'ABRV'
+                size_hint:.3,.7
+            MDTextField:
+                mode: "rectangle"
+                id: ti_ejercicio
+                multiline: True
+                hint_text: 'EJERCICIO'
+        
+        #**************MUSCULOS SECUNDARIO*************************
+        MDBoxLayout:
+            size_hint:1,.8
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_pec
+                multiline: False
+                hint_text: 'PEC_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_esp
+                multiline: False
+                hint_text: 'ESP_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abd
+                multiline: False
+                hint_text: 'ABD_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_hom
+                multiline: False
+                hint_text: 'HOM_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+        MDBoxLayout:
+            size_hint:1,.5
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_bic
+                multiline: False
+                hint_text: 'BIC_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_tri
+                multiline: False
+                hint_text: 'TRI_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_ant
+                multiline: False
+                hint_text: 'ANT_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_cua
+                multiline: False
+                hint_text: 'CUA__%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+        MDBoxLayout:
+            size_hint:1,.8
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_isq
+                multiline: False
+                hint_text: 'ISQ_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abdu
+                multiline: False
+                hint_text: 'ABDU_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_pan
+                multiline: False
+                hint_text: 'PAN_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_glu
+                multiline: False
+                hint_text: 'GLU__%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+        #*******************MUSCULOS SECUNDARIO****************************
+                
+        MDGridLayout:
+            padding: 10
+            spacing:5 
+            cols:2     
+            MDRaisedButton:
+                text: 'ACTUALIZAR'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.update_data_SMG()
+            MDRaisedButton:
+                text: 'ELIMINAR'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.delete_data_SMG()
+            MDRaisedButton:
+                text:'ATRAS'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.back_to_dbw_SMG()
+            MDRaisedButton:
+                text: 'INICIO'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.back_to_StartWid()         
+#********************************UPDATEDATA GENERAL********************************
+#********************************UPDATEDATA ESPECIFICO********************************
+<UpdateData_SME>:
+    data: ''
+    data_id: ''
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing:10
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.7
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"MODIFICAR O ELIMINAR EJERCICIO"
+                    font_size:16
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+        #**********FIN TITULO********************************
+        MDBoxLayout:
+            size_hint:1,.6
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_id
+                text:root.data_id
+                multiline: False
+                hint_text: 'ID'
+                readonly:True
+            MDTextField:
+                mode: "rectangle"
+                id: ti_articulacion
+                multiline: False
+                hint_text: 'MONO O MULTI'
+        MDBoxLayout:
+            size_hint:1,.6
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_modo
+                multiline: False
+                hint_text: 'MODO'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_1rm
+                multiline: True
+                hint_text: '1RM'
+        MDBoxLayout:
+            spacing:2
+            orientation: 'horizontal'
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abrv
+                multiline: False
+                hint_text: 'ABRV'
+                size_hint:.3,.7
+            MDTextField:
+                mode: "rectangle"
+                id: ti_ejercicio
+                multiline: True
+                hint_text: 'EJERCICIO'
+        
+        #**************MUSCULOS SECUNDARIO*************************
+        MDBoxLayout:
+            size_hint:1,.8
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_pec
+                multiline: False
+                hint_text: 'PEC_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_esp
+                multiline: False
+                hint_text: 'ESP_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abd
+                multiline: False
+                hint_text: 'ABD_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_hom
+                multiline: False
+                hint_text: 'HOM_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+        MDBoxLayout:
+            size_hint:1,.5
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_bic
+                multiline: False
+                hint_text: 'BIC_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_tri
+                multiline: False
+                hint_text: 'TRI_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_ant
+                multiline: False
+                hint_text: 'ANT_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_cua
+                multiline: False
+                hint_text: 'CUA__%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+        MDBoxLayout:
+            size_hint:1,.8
+            orientation: 'horizontal'
+            spacing:2
+            MDTextField:
+                mode: "rectangle"
+                id: ti_isq
+                multiline: False
+                hint_text: 'ISQ_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_abdu
+                multiline: False
+                hint_text: 'ABDU_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_pan
+                multiline: False
+                hint_text: 'PAN_%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDTextField:
+                mode: "rectangle"
+                id: ti_glu
+                multiline: False
+                hint_text: 'GLU__%'
+                pos_hint: {"center_x": .5, "center_y": .5}
+        #*******************MUSCULOS SECUNDARIO****************************
+        MDGridLayout:
+            padding: 10
+            spacing:5 
+            cols:2     
+            MDRaisedButton:
+                text: 'ACTUALIZAR'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.update_data_SME()
+            MDRaisedButton:
+                text: 'ELIMINAR'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.delete_data_SME()
+            MDRaisedButton:
+                text:'ATRAS'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.back_to_dbw_SME()
+            MDRaisedButton:
+                text: 'INICIO'
+                font_size:18
+                size_hint:1,1
+                pos_hint:{"center_y":.5}
+                on_press: root.back_to_StartWid()         
+#********************************UPDATEDATA ESPECIFICO********************************
+# #******************************************************************************
+# #*FIN**CUARTA VENTANA**SESION MUSCULAR MODIFICAR Y ELIMINAR EJERCICIOS*********
+# #******************************************************************************
+
+# #******************************************************************************
+# #*********QUINTA VENTANA**INGRESAR SESION EJERCICIO****************************
+# #****************************************************************************** 
+<Insert_ejercicio_sesion_muscular>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing:10
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.25
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"EJERCICIO MUSCULAR"
+                    font_size:20
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+        #*************FIN---TITULO*************************
+        MDBoxLayout:
+            size_hint:1,.12           
+            Spinner:
+                id: sesion_muscular1
+                text: 'SELECCIONE_MUSCULO'
+                values: ["PECHO","ESPALDA","ABDOMEN", "HOMBRO", "BICEP","TRICEP","ANTEBRAZO","CUADRICEP","ISQUIO","ABDUCTORE","PANTORRILLA","GLUTEO"]
+                sync_height: True
+                on_text: root.agregar_spinner()
+                
+                #SpinnerOption:
+                #option_cls: Factory.sp
+                #background_color:"black"#1,1,1
+                # color:"black"
+        MDBoxLayout:
+            size_hint:1,.12
+            canvas:
+                Color:  #********COLOR AZUL*****CAJA EXTERNA*********
+                    rgb: 255,255,255
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            MDBoxLayout:#SPINNER CARGAR DATABASE EJERCICIO
+                id:spiner_ejercicio_sesion
+                
+        MDBoxLayout: #despues del spiner 
+            size_hint:1,.01 
+        #********************HISTORIAL************************** 
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing:2
+            size_hint:1,.2
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDBoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text:"MAXPESO"
+                        font_size:12
+                        text_size:self.size
+                        valign:"top"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                    MDLabel:
+                        id:max_peso
+                        font_size:20
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                        on_text: root.datos_historico()
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDBoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text:"NO_REP"
+                        font_size:12
+                        text_size:self.size
+                        valign:"top"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                    MDLabel:
+                        id:no_rep
+                        font_size:20
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDBoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text:"NO_SERIE"
+                        font_size:12
+                        text_size:self.size
+                        valign:"top"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                    MDLabel:
+                        id:no_serie
+                        font_size:20
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDBoxLayout:
+                    orientation: "vertical"
+                    MDLabel:
+                        text:"1RM%"
+                        font_size:12
+                        text_size:self.size
+                        valign:"top"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+                    MDLabel:
+                        id:rmp
+                        font_size:20
+                        text_size:self.size
+                        valign:"middle"
+                        halign:"center"
+                        color:"green"
+                        bold: True
+        #********************HISTORIAL**************************
+        MDBoxLayout:
+            size_hint:1,.1 
+        #********************INGRESO DE DATOS**************************         
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing:10
+            #*************PESO******NO REPETICION**********************
+            MDBoxLayout:
+                spacing:10
+                padding: 10
+                size_hint:1,.5
+                MDRaisedButton:
+                    text:'-'
+                    font_size:25
+                    bold: True
+                    on_press: root.disminuir_boton_nrep()
+                MDTextField:
+                    id: ti_peso1
+                    mode: "rectangle"
+                    text: "1"
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    multiline: False
+                    hint_text: 'PESO'
+                MDTextField:
+                    id: ti_repeticion
+                    mode: "rectangle"
+                    text: root.nrep
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    multiline: False
+                    hint_text: 'No.REP'
+                MDRaisedButton: #********************
+                    text:'+'
+                    font_size:25
+                    bold: True
+                    on_press: root.aumentar_boton_nrep()
+            #**********PESO*****NO REPETICION************************
+            #*************RIR-REPETICION EN RESERVA*****************
+            MDBoxLayout:
+                spacing:10
+                padding: 10
+                size_hint:1,.5
+                MDRaisedButton:
+                    text:'-'
+                    font_size:25
+                    bold: True
+                    on_press: root.disminuir_boton_rir()
+                MDTextField:
+                    id: ti_rir
+                    mode: "rectangle"
+                    text: root.rir
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    multiline: False
+                    hint_text: 'RIR'
+                    readonly:True
+                MDTextField:
+                    id: ti_rpe
+                    mode: "rectangle"
+                    text: root.rpe
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    multiline: False
+                    hint_text: 'RPE'
+                    readonly:True
+                MDRaisedButton: #********************
+                    text:'+'
+                    font_size:25
+                    bold: True
+                    on_press: root.aumentar_boton_rir()
+            #*************RIR-REPETICION EN RESERVA*****************
+            #*************TIEMPO DE TENSION**************************
+            MDBoxLayout:
+                spacing:10
+                padding: 10
+                size_hint:1,.5
+                MDRaisedButton:
+                    text:'-'
+                    font_size:25
+                    bold: True
+                    on_press: root.disminuir_boton_tt()
+                MDTextField:
+                    id: ti_ttrep
+                    mode: "rectangle"
+                    text: root.tt
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    multiline: False
+                    hint_text: 'TT'
+                    readonly:True
+                MDTextField:
+                    id: ti_descanso
+                    mode: "rectangle"
+                    text: "01"
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    multiline: False
+                    hint_text: 'DESC'
+                    #readonly:True  
+                MDRaisedButton: #********************
+                    text:'+'
+                    font_size:25
+                    bold: True
+                    on_press: root.aumentar_boton_tt()
+                    readonly:True
+            #*************TIEMPO DE TENSION**************************
+            #********************INGRESO DE DATOS**************************  
+            MDBoxLayout:
+                size_hint:1,.1 
+            #*******************CRONOMETRO**********************************************************
+            MDBoxLayout:
+                orientation: 'horizontal'
+                size_hint:1,.30
+                spacing:5
+                padding:10
+                MDBoxLayout:
+                    MDCard:
+                        radius:"10dp"
+                        #padding:"10dp"
+                        line_color: "green"
+                        size_hint:1,3
+                        MDLabel:
+                            id: stopwatch
+                            color:"green"
+                            font_size:30
+                            text_size:self.size
+                            valign:"middle"
+                            halign:"center"
+
+                MDRaisedButton:
+                    id: start_stop
+                    text: 'Start'
+                    on_press: root.start_stop()
+                MDRaisedButton:
+                    id: reset
+                    text: 'reset'
+                    on_press: root.reset()
+                    
+            #*******************CRONOMETRO**************************************************
+            #***************BOTONES**************************
+        MDBoxLayout:
+            orientation: "horizontal"
+            padding: 5
+            spacing:5
+            size_hint:1,.2
+            MDRaisedButton:
+                text:'AGREGAR'
+                font_size:15
+                size_hint:1,1
+                on_press:root.insertdata_sesion_muscular()
+            MDRaisedButton:
+                text:'INICIO'
+                font_size:15
+                size_hint:1,1
+                on_press:root.back_to_StartWid()
+            MDRaisedButton:
+                text:'EDIT'
+                font_size:15
+                size_hint:1,1
+                on_press: root.database_ejercicio()
+            MDRaisedButton:
+                text:'VER'
+                font_size:15
+                size_hint:1,1
+                on_press: root.datos_historico()
+
+# #******************************************************************************
+# #*FIN************QUINTA VENTANA**INGRESAR SESION EJERCICIO*********************
+# #****************************************************************************** 
+
+# #******************************************************************************
+# #*INICIO************SEXTA VENTANA**VISUALIZAR SESION EJERCICIO*****************
+# #****************************************************************************** 
+<DataWid_sesion_ejercicio>:
+    data: ''
+    data_id: ''
+    canvas:
+        Color:
+            rgba: 0,0,1,.5
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    Label:
+        size_hint_x: 0.9
+        size_font: self.width*0.4
+        text: root.data
+        multiline: True
+    MDFlatButton:
+        text: 'Edit'
+        theme_text_color: "Custom"
+        text_color:"white"
+        adaptive_size: True
+        md_bg_color:0,.5,.5,.6
+        on_press: root.update_data(root.data_id)
+
+<Button_atras_sesion_ejercicio>:#BOTON AGREGAR
+    font_size: 15#self.height*0.5
+    text: 'ATRAS'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+    on_press: self.back_to_insert_sesion_ejercicio()
+
+<Button_inicio_sesion_ejercicio>:#BOTON INICIO
+    font_size: 15#self.height*0.5
+    text: 'INICIO'
+    font_size:16
+    size_hint:1,1
+    adaptive_size: True
+    pos_hint: {"center_x": .5, "center_y": .5}
+    on_press: self.back_to_StartWid()
+    
+<DataBase_sesion_ejercicio>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing:10
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.2
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"RESUMEN EJERCICIO MUSCULAR"
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+         #*******FIN ***TITULO*****************************************
+        ScrollView:
+            size: self.size
+            MDGridLayout:
+                id: agregar_ejercicio
+                padding: [10,10,10,10]
+                spacing: 5
+                size_hint_y: None
+                cols: 1
+                row_default_height: root.height*0.3 #TAMAÑO TARJETA VISUALIZADOR
+                height: self.minimum_height
+        #**************BOTONES*************
+        MDBoxLayout:
+            id: inicio_ejercicio
+            padding: 5
+            spacing:5
+            orientation: 'horizontal'
+            size_hint:1,.1
+            canvas:
+                Color:
+                    rgb: 1,1,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+# #******************************************************************************
+# #*FIN************SEXTA VENTANA**VISUALIZAR SESION EJERCICIO*********************
+# #****************************************************************************** 
+
+# #******************************************************************************
+# #*INICIO************SEPTIMA VENTANA**MODIFICAR SESION EJERCICIO****************
+# #****************************************************************************** 
+#********************UPDATEDATA SESION EJERCICIO GENERAL************************
+<UpdateData_sesion_ejercicio_G>:
+    data: ''
+    data_id: ''
+    MDBoxLayout:
+        orientation: "vertical"
+        padding:5
+        spacing:5
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.4
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"RESUMEN EJERCICIO MUSCULAR"
+                    font_size:18
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+        #*************FIN---TITULO*************************
+        MDBoxLayout:
+            size_hint: 1,2.5
+        MDBoxLayout:
+            orientation: "vertical"
+            padding:20
+            size_hint: 1,1
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'EJERCICIO'
+                pos_hint:{"center_y":.8}
+                id: ti_ejercicio
+                multiline: False
+                #size_hint: 1,.8
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'FECHA'
+                id: ti_fecha
+                multiline: False
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'PESO'
+                id: ti_peso
+                multiline: False
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'TIEMPO DE TENSION POR REP EN SEG'
+                id: ti_ttrep
+                multiline: False
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'No.REPETICION'
+                id: ti_repeticion
+                multiline: False
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'REPETICIONES EN RESERVA DE 1 A 10'
+                id: ti_rir
+                multiline: False
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'NIVEL DE ESFUERZO DE 1 A10'
+                id: ti_rpe
+                multiline: False
+            MDTextField:
+                mode: "rectangle"
+                hint_text: 'DESCANSO'
+                id: ti_descanso
+                multiline: False
+        MDBoxLayout: 
+            orientation: "horizontal"
+            padding: 2
+            spacing:2
+            size_hint: 1,.3
+            MDRaisedButton:
+                text:'ATRAS'
+                font_size:12
+                pos_hint:{"center_y":.5}
+                on_press: root.back_to_dbw()
+            MDRaisedButton:
+                text: 'ACTUALIZAR'
+                font_size:12
+                pos_hint:{"center_y":.5}
+                on_press: root.update_data_sesion_ejercicio_G()
+            MDRaisedButton:
+                text: 'ELIMINAR'
+                font_size:12
+                pos_hint:{"center_y":.5}
+                on_press: root.delete_data_sesion_ejercicio_G()
+            MDRaisedButton:
+                text: 'INICIO'
+                font_size:12
+                pos_hint:{"center_y":.5}
+                on_press: root.back_to_StartWid()
+#********************UPDATEDATA SESION EJERCICIO GENERAL***************************
+
+# #******************************************************************************
+# #*FIN************SEPTIMA VENTANA**MODIFICAR SESION EJERCICIO****************
+# #****************************************************************************** 
+
+# #******************************************************************************
+# #*INICIO************OCTAVA VENTANA**GRAFICA NIVEL DE INTENSIDAD****************
+# #****************************************************************************** 
+<Nivel_intensidad>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding:5
+        spacing:5
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.14
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"NIVEL DE INTENSIDAD"
+                    font_size:16
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+        #*************FIN---TITULO*************************
+        MDBoxLayout:
+            size_hint:1,.07
+            Spinner:
+                id: indicador_musculo
+                text: 'PECHO'
+                values: ["PECHO","ESPALDA","ABDOMEN", "HOMBRO", "BICEP","TRICEP","ANTEBRAZO","CUADRICEP","ISQUIO","ABDUCTORE","PANTORRILLA","GLUTEO"]
+                sync_height: True
+                on_text: root.agregar_spinner2()
+        MDBoxLayout:
+            id:indicador_ejercicio
+            size_hint:1,.07
+
+        ScrollView:
+            GridLayout:
+                id:box
+                cols:1
+                padding:10,10
+                spacing:10,10
+                size_hint_y: None
+                height:self.minimum_height
+                row_default_height:200
+
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box1
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box2  
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box3     
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box4
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box5
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box6
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box7
+        MDBoxLayout:
+            padding:5
+            spacing:5
+            size_hint: 1,.1
+            Label:
+                text: root.cont1
+                id:cont_graf1
+            MDRaisedButton:
+                text: 'INICIO'
+                font_size:12
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.back_to_StartWid()  
+            MDRaisedButton:
+                text: 'ACTUALIZAR'
+                font_size:12
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.grafica()
+            MDRaisedButton:
+                text: '<='
+                bold: True
+                font_size:20
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.disminuir_boton_grafica1()
+            MDRaisedButton:
+                text: '=>'
+                bold: True
+                font_size:20
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.aumentar_boton_grafica1()
+# #******************************************************************************
+# #*INICIO************OCTAVA VENTANA**GRAFICA NIVEL DE INTENSIDAD****************
+# #****************************************************************************** 
+                
+#*************************************************************************
+# #*INICIO************NOVENA VENTANA**GRAFICA NIVEL DE ESTRES****************
+# #******************************************************************************  
+<Nivel_estress>:
+    MDBoxLayout:
+        orientation: "vertical"
+        padding:5
+        spacing:5
+        size_hint: 1,1
+        MDBoxLayout:
+            size_hint: 1,.14
+            orientation:"horizontal"
+            padding: "10dp"
+            MDCard:
+                radius:"10dp"
+                padding:"10dp"
+                line_color: "green"
+                MDLabel:
+                    text:"NIVEL DE ESTRESS"
+                    font_size:16
+                    text_size:self.size
+                    valign:"middle"
+                    halign:"center"
+                    color:"green"
+                    bold: True
+        #*************FIN---TITULO*************************
+        MDBoxLayout:
+            size_hint:1,.07
+            Spinner:
+                id: nivel_estres_sm
+                text: 'PECHO'
+                values: ["PECHO","ESPALDA","ABDOMEN", "HOMBRO", "BICEP","TRICEP","ANTEBRAZO","CUADRICEP","ISQUIO","ABDUCTORE","PANTORRILLA","GLUTEO"]
+                sync_height: True
+        #         #on_text: root.agregar_spinner3()
+        MDBoxLayout:
+            id:nivel_estres_se
+            size_hint:1,.07
+            Spinner:
+                id: tiempo
+                text: 'SESION'
+                values: ["SESION","SEMANA","MES", "AÑO"]
+                sync_height: True
+
+        ScrollView:
+            GridLayout:
+                id:box
+                cols:1
+                padding:10,10
+                spacing:10,10
+                size_hint_y: None
+                height:self.minimum_height
+                row_default_height:422
+
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box1
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box2  
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box3  
+                MDBoxLayout:
+                    radius:"5dp"
+                    padding:"5dp"
+                    line_color: "green"
+                    id:box4  
+                
+        MDBoxLayout:
+            padding:5
+            spacing:5
+            size_hint: 1,.1
+            Label:
+                text: root.cont
+                id:cont_graf
+            MDRaisedButton:
+                text: 'INICIO'
+                font_size:12
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.back_to_StartWid()  
+            MDRaisedButton:
+                text: 'ACTUALIZAR'
+                font_size:12
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.actualizar()
+            MDRaisedButton:
+                text: '<='
+                bold: True
+                font_size:20
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.disminuir_boton_grafica()
+
+            MDRaisedButton:
+                text: '=>'
+                bold: True
+                font_size:20
+                size_hint: 1,1
+                #pos_hint:{"center_y":.5}
+                on_press: root.aumentar_boton_grafica()
+
+                
+                
+                
+#*************************************************************************
+# #*FIN************NOVENA VENTANA**GRAFICA NIVEL DE ESTRES****************
+# #****************************************************************************** 
